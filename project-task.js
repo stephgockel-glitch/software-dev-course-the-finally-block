@@ -1,69 +1,55 @@
+console.log("✅ project-task.js is running");
+
 /*
-===========================================
-📂 File Processing Simulation with Exceptions
-===========================================
+========================================
+📁 File Processing Simulation with Exceptions
+========================================
 
 🎯 Objective:
-This activity will help students:
+- Identify standard JavaScript exceptions
+- Use try/catch/finally to ensure cleanup
 
-- Identify and explain JavaScript's standard exceptions through practical examples
-- Implement `finally` blocks to manage resources and ensure consistent cleanup
-
----
 📘 Scenario:
-You’ve been hired to create a system that simulates file processing for a virtual library.
-
-The system must:
-- Validate user input (file names and data)
-- Simulate file reading/writing operations
-- Ensure all resources (e.g., file handles) are closed, even if errors occur
-
----
-🧭 Instructions:
-
-Step 1: Debug Standard Exceptions  
-- Run the starter code and identify the standard exceptions being thrown  
-- Correct the issues and observe output
-
-Step 2: Add Input Validation and Custom Exceptions  
-- Validate:
-  • Missing file names 
-  • Non-string file data  
-  • Empty string data 
-
-Step 3: Implement a `finally` Block  
-- Simulate releasing resources, regardless of whether an error occurred
-
-Step 4: Test Your Solution  
-- Use a variety of inputs to confirm the `finally` block always executes
+Simulate file processing for a virtual library.
 */
 
-// ============================================
-// 🛠️ Starter Code: processFile Function
-// ============================================
-
 function processFile(fileName, fileData) {
+  let fileHandle = null;
+
   try {
-    // TODO: Add input validation here
-    
-    // TODO: Implement simulated file processing here
+    // Simulate opening a file
+    fileHandle = "OPEN";
+
+    // ✅ Input validation
+    if (!fileName) {
+      throw new ReferenceError("File name is missing");
+    }
+
+    if (typeof fileData !== "string") {
+      throw new TypeError("File data must be a string");
+    }
+
+    if (fileData.length === 0) {
+      throw new Error("File data cannot be empty");
+    }
+
+    // ✅ Simulate processing
     console.log(`Processing file: ${fileName}`);
     console.log(`File content: ${fileData}`);
-    
-    // TODO: Add simulated file operations (reading/writing)
-    
-  } catch (err) {
-    // TODO: Implement error handling
-    console.error(err);
+    console.log("✅ File processed successfully");
+  } catch (error) {
+    console.log(`❌ ${error.name}: ${error.message}`);
+  } finally {
+    // ✅ Always runs
+    fileHandle = "CLOSED";
+    console.log("🔒 File handle closed");
   }
-  // TODO: Implement a finally block to close resources
 }
 
-// ============================================
-// 🧪 Test Cases Below
-// ============================================
-
-processFile(); // ❌ ReferenceError: File name is missing
-processFile("myFile.txt", 42); // ❌ TypeError: File data must be a string
-processFile("myFile.txt", ""); // ❌ Error: File data cannot be empty
-processFile("myFile.txt", "Hello, world!"); // ✅ Should process successfully
+// ================================
+// 🧪 Test Cases
+// ================================
+processFile();                       // ReferenceError
+processFile("myFile.txt", 42);       // TypeError
+processFile("myFile.txt", "");       // Error
+processFile("myFile.txt", "Hello, world!"); // Success
